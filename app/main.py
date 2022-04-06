@@ -2,7 +2,7 @@ from enum import Enum
 from typing import Optional
 
 from fastapi import FastAPI
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 app = FastAPI()
 
@@ -13,6 +13,15 @@ class Item(BaseModel):
     price: float
     tax: Optional[float] = None
     is_offer: Optional[bool] = None
+    foo: str = Field(
+
+        # request body의 파라미터로 취급된다.
+        alias="barbaz",
+
+        # 스웨거 문서에서 schema를 보면 나오는 내용.
+        title="foo 제목",
+        description="foo 설명",
+    )
 
 
 @app.post("/items/")
